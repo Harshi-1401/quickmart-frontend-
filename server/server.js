@@ -1,3 +1,4 @@
+const adminSetup = require('./routes/adminSetup');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -27,26 +28,75 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use("/api/setup", adminSetup);
 
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => {
+.then(async () => {
   console.log('✅ Connected to MongoDB Atlas');
   console.log('📍 Database:', mongoose.connection.name);
+  
+  // Auto-seed database if empty (for first deployment)
+  await autoSeedDatabase();
 })
 .catch(err => {
   console.error('❌ MongoDB connection error:', err);
   process.exit(1);
 });
 
+// Auto-seed function
+async function autoSeedDatabase() {
+  try {
+    const Product = require('./models/Product');
+    const User = require('./models/User');
+    
+    // Check if products exist
+    const productCount = await Product.countDocuments();
+    if (productCount === 0) {
+      console.log('📦 Database is empty, seeding products...');
+      
+      // Import and run seed data
+      const { initialProducts } = require('../src/data/products');
+      await Product.insertMany(initialProducts);
+      console.log(`✅ Seeded ${initialProducts.length} products`);
+    } else {
+      console.log(`📦 Found ${productCount} products in database`);
+    }
+    
+    // Check if admin user exists
+    const adminExists = await User.findOne({ role: 'admin' });
+    if (!adminExists) {
+      console.log('👤 Creating admin user...');
+      
+      const adminUser = new User({
+        name: 'Admin',
+        email: 'admin@quickmart.com',
+        password: 'admin123',
+        phone: '9876543210',
+        address: 'QuickMart HQ',
+        role: 'admin'
+      });
+      
+      await adminUser.save();
+      console.log('✅ Admin user created');
+    } else {
+      console.log('👤 Admin user already exists');
+    }
+    
+  } catch (error) {
+    console.error('❌ Auto-seed error:', error.message);
+  }
+}
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/setup', require('./routes/setup'));
 
 // Health check
 app.get('/api/health', (req, res) => {
