@@ -13,16 +13,17 @@ npm install
 cd ..
 ```
 
-### 2. Setup MongoDB
-Make sure MongoDB is running on your system:
-- **Local MongoDB**: `mongod` (default: mongodb://localhost:27017)
-- **MongoDB Atlas**: Update `server/.env` with your connection string
+### 2. MongoDB Atlas Setup
+The application is configured to use MongoDB Atlas cloud database:
+- **Database**: MongoDB Atlas Cluster
+- **Connection**: Pre-configured in `server/.env`
+- **No local MongoDB installation required**
 
-### 3. Configure Environment
-Update `server/.env`:
+### 3. Environment Configuration
+The `server/.env` file is already configured with:
 ```env
-MONGODB_URI=mongodb://localhost:27017/quickmart
-JWT_SECRET=your_secure_jwt_secret_key_here
+MONGODB_URI=mongodb+srv://quickmart:quick%40mart@cluster0.ospmsor.mongodb.net/quickmart?retryWrites=true&w=majority&appName=Cluster0
+JWT_SECRET=quickmart_jwt_secret_key_2024_production_ready
 PORT=5000
 ```
 
@@ -83,9 +84,9 @@ node test-server.js
 - Change PORT in `server/.env`
 - Update REACT_APP_API_URL in `.env`
 
-### MongoDB connection
-- Ensure MongoDB is running
-- Check connection string in `server/.env`
+### MongoDB Atlas connection
+- Check internet connection
+- Verify MongoDB Atlas credentials in `server/.env`
 
 ### CORS errors
 - Verify API_URL in frontend `.env`

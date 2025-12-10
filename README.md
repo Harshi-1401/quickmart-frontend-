@@ -34,7 +34,7 @@ A full-featured React + Node.js grocery delivery application similar to Instamar
 
 ### Prerequisites
 - Node.js (v14 or higher)
-- MongoDB (local or cloud)
+- Internet connection (for MongoDB Atlas)
 
 ### Backend Setup
 
@@ -48,10 +48,10 @@ cd server
 npm install
 ```
 
-3. Create `.env` file with your MongoDB connection:
+3. The `.env` file is pre-configured with MongoDB Atlas:
 ```env
-MONGODB_URI=mongodb://localhost:27017/quickmart
-JWT_SECRET=your_jwt_secret_key_here
+MONGODB_URI=mongodb+srv://quickmart:quick%40mart@cluster0.ospmsor.mongodb.net/quickmart?retryWrites=true&w=majority&appName=Cluster0
+JWT_SECRET=quickmart_jwt_secret_key_2024_production_ready
 PORT=5000
 ```
 
