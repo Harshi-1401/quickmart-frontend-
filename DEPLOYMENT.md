@@ -119,9 +119,10 @@ Your frontend is already deployed at:
 ## Current Status
 
 ✅ **Frontend**: Deployed on Vercel  
-🔄 **Backend**: Ready for deployment  
+✅ **Backend**: Deployed on Render (`quickmart-backend-tvuf.onrender.com`)  
 ✅ **Database**: MongoDB Atlas configured  
 ✅ **CORS**: Configured for your frontend domain  
+🔄 **API Connection**: Needs frontend redeployment with correct API URL  
 
 ## Next Steps
 
