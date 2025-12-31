@@ -29,30 +29,30 @@ function Login() {
     setValidatingEmail(true);
     setError('');
 
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://quickmart-backend-tvuf.onrender.com/api'}/auth/validate-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: formData.email }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setEmailValidated(true);
-        setError('');
-      } else {
-        setError(data.message);
-        setEmailValidated(false);
-      }
-    } catch (error) {
-      setError('Failed to validate email. Please try again.');
-      setEmailValidated(false);
-    } finally {
+    // Basic email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address');
       setValidatingEmail(false);
+      return;
     }
+
+    // Email domain validation
+    const allowedDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
+    const emailDomain = formData.email.split('@')[1].toLowerCase();
+    
+    if (!allowedDomains.includes(emailDomain)) {
+      setError('Please use a valid email provider (Gmail, Yahoo, Outlook, Hotmail)');
+      setValidatingEmail(false);
+      return;
+    }
+
+    // Simulate API call delay
+    setTimeout(() => {
+      setEmailValidated(true);
+      setError('');
+      setValidatingEmail(false);
+    }, 1000);
   };
 
   const handleSubmit = async (e) => {
