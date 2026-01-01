@@ -4,6 +4,10 @@ node_modules/
 # Production
 build/
 
+# Environment variables
+.env
+server/.env
+
 # Misc
 .DS_Store
 .env.local

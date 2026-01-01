@@ -30,7 +30,10 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
+      console.log('🔐 AuthContext: Attempting login to:', authAPI);
       const response = await authAPI.login({ email, password });
+      console.log('✅ AuthContext: Login response received:', response.data);
+      
       const { token, user } = response.data;
       
       localStorage.setItem('token', token);
@@ -39,6 +42,8 @@ export const AuthProvider = ({ children }) => {
       
       return { success: true };
     } catch (error) {
+      console.error('❌ AuthContext: Login error:', error);
+      console.error('❌ Error response:', error.response?.data);
       return { 
         success: false, 
         message: error.response?.data?.message || 'Login failed' 

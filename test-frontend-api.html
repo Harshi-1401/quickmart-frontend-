@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Frontend API Connection</title>
+</head>
+<body>
+    <h1>QuickMart API Test</h1>
+    <button onclick="testHealth()">Test Health</button>
+    <button onclick="testLogin()">Test Admin Login</button>
+    <div id="results"></div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        
+        async function testHealth() {
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                document.getElementById('results').innerHTML = 
+                    `<h3>✅ Health Check Success</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('results').innerHTML = 
+                    `<h3>❌ Health Check Failed</h3><pre>${error.message}</pre>`;
+            }
+        }
+        
+        async function testLogin() {
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'admin@quickmart.com',
+                        password: 'admin123'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('results').innerHTML = 
+                        `<h3>✅ Admin Login Success</h3><pre>${JSON.stringify(data.user, null, 2)}</pre>`;
+                } else {
+                    document.getElementById('results').innerHTML = 
+                        `<h3>❌ Admin Login Failed</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                document.getElementById('results').innerHTML = 
+                    `<h3>❌ Login Request Failed</h3><pre>${error.message}</pre>`;
+            }
+        }
+    </script>
+</body>
+</html>

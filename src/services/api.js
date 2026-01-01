@@ -40,7 +40,7 @@ export const authAPI = {
 
 // Products API
 export const productsAPI = {
-  getAll: () => api.get('/products'),
+  getAll: (admin = false) => api.get(`/products${admin ? '?admin=true' : ''}`),
   getById: (id) => api.get(`/products/${id}`),
   create: (product) => api.post('/products', product),
   update: (id, updates) => api.put(`/products/${id}`, updates),
@@ -58,6 +58,9 @@ export const ordersAPI = {
 // Users API
 export const usersAPI = {
   getAll: () => api.get('/users'),
+  getById: (id) => api.get(`/users/${id}`),
+  update: (id, userData) => api.put(`/users/${id}`, userData),
+  delete: (id) => api.delete(`/users/${id}`),
   getStats: () => api.get('/users/stats'),
 };
 

@@ -116,41 +116,60 @@
   margin: 5px 0;
   color: #666;
 }
-.email-validation-container {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.email-validation-container input {
-  flex: 1;
-}
-
-.validate-btn {
-  padding: 12px 16px;
-  border: 2px solid #667eea;
-  background: white;
-  color: #667eea;
+.step-indicator {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f8f9fa;
   border-radius: 10px;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  transition: all 0.3s;
+}
+
+.step-indicator h3 {
+  margin: 0 0 5px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.step-indicator p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #667eea;
+  font-size: 14px;
   cursor: pointer;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
-.validate-btn:hover:not(:disabled) {
-  background: #667eea;
-  color: white;
+.back-btn:hover {
+  background-color: #f0f0f0;
+}
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  border: 1px solid #c3e6cb;
 }
 
-.validate-btn.validated {
-  background: #28a745;
-  border-color: #28a745;
-  color: white;
+.login-form select {
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+  background: white;
 }
 
-.validate-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.login-form select:focus {
+  outline: none;
+  border-color: #667eea;
 }

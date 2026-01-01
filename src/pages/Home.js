@@ -86,7 +86,16 @@ function Home() {
           <div className="product-grid">
             {filteredProducts.map(product => (
               <div key={product._id || product.id} className="product-card">
-                <div className="product-emoji">{product.emoji}</div>
+                <div className="product-image-container">
+                  <img 
+                    src={product.imageUrl || 'https://via.placeholder.com/200x200?text=Product'} 
+                    alt={product.name}
+                    className="product-image"
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/200x200?text=Error';
+                    }}
+                  />
+                </div>
                 <h4 className="product-name">{product.name}</h4>
                 <p className="product-unit">{product.unit}</p>
                 <div className="product-footer">

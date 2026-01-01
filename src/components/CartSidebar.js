@@ -61,7 +61,15 @@ function CartSidebar() {
           ) : (
             cart.map(item => (
               <div key={item._id || item.id} className="cart-item">
-                <div className="cart-item-emoji">{item.emoji}</div>
+                <div className="cart-item-image">
+                  <img 
+                    src={item.imageUrl || 'https://via.placeholder.com/50x50?text=Product'} 
+                    alt={item.name}
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/50x50?text=Error';
+                    }}
+                  />
+                </div>
                 <div className="cart-item-details">
                   <div className="cart-item-name">{item.name}</div>
                   <div className="cart-item-unit">{item.unit}</div>
