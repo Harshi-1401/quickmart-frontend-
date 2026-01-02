@@ -18,17 +18,17 @@ function Header() {
   const confirmLogout = () => {
     logout();
     setShowLogoutConfirm(false);
-    navigate('/login');
+    navigate('/');
   };
 
   return (
     <header className="header">
       <div className="container">
         <div className="header-content">
-          <Link to="/" className="logo">🛒 QuickMart</Link>
+          <Link to="/dashboard" className="logo">🛒 QuickMart</Link>
           
           <nav className="nav-links">
-            <Link to="/">Home</Link>
+            <Link to="/dashboard">Home</Link>
             <Link to="/orders">My Orders</Link>
             {user?.role === 'admin' && (
               <Link to="/admin">Admin Panel</Link>

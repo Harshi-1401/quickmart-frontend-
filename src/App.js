@@ -1,27 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
-import Home from './pages/Home';
-import Login from './pages/Login';
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import Orders from './pages/Orders';
+import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import './App.css';
-
-function PrivateRoute({ children, adminOnly = false }) {
-  const { user } = useAuth();
-  
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
-  
-  if (adminOnly && user.role !== 'admin') {
-    return <Navigate to="/" />;
-  }
-  
-  return children;
-}
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -33,33 +22,54 @@ function AppContent() {
         justifyContent: 'center', 
         alignItems: 'center', 
         height: '100vh',
-        fontSize: '18px'
+        fontSize: '18px',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        color: 'white'
       }}>
-        Loading...
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(10px)',
+          padding: '2rem',
+          borderRadius: '15px',
+          textAlign: 'center'
+        }}>
+          <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🛒</div>
+          <div>Loading QuickMart...</div>
+        </div>
       </div>
     );
   }
   
   return (
     <div className="App">
-      {user && <Header />}
+      {/* Show Header only for authenticated users on protected routes */}
+      {user && window.location.pathname !== '/' && window.location.pathname !== '/login' && window.location.pathname !== '/register' && <Header />}
+      
       <Routes>
-        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-        <Route path="/" element={
-          <PrivateRoute>
-            <Home />
-          </PrivateRoute>
+        {/* Public Routes */}
+        <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <LandingPage />} />
+        <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <LoginPage />} />
+        <Route path="/register" element={user ? <Navigate to="/dashboard" replace /> : <RegisterPage />} />
+        
+        {/* Protected Routes */}
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
         } />
         <Route path="/orders" element={
-          <PrivateRoute>
+          <ProtectedRoute>
             <Orders />
-          </PrivateRoute>
+          </ProtectedRoute>
         } />
         <Route path="/admin" element={
-          <PrivateRoute adminOnly={true}>
+          <ProtectedRoute adminOnly={true}>
             <AdminDashboard />
-          </PrivateRoute>
+          </ProtectedRoute>
         } />
+        
+        {/* Catch all route - redirect to appropriate page */}
+        <Route path="*" element={<Navigate to={user ? "/dashboard" : "/"} replace />} />
       </Routes>
     </div>
   );

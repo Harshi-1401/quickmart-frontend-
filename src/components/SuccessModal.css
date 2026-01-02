@@ -25,7 +25,7 @@
 }
 
 .modal-header {
-  background: linear-gradient(135deg, #2c5aa0 0%, #1e3d72 100%);
+  background: #2563eb;
   color: white;
   padding: 30px;
   text-align: center;
@@ -82,7 +82,7 @@
 }
 
 .detail-value {
-  color: #2c5aa0;
+  color: #2563eb;
   font-weight: 500;
   font-size: 14px;
 }
@@ -101,7 +101,7 @@
 }
 
 .continue-btn {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  background: #2563eb;
   color: white;
   border: none;
   padding: 15px 30px;
@@ -110,12 +110,13 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
 }
 
 .continue-btn:hover {
+  background: #1d4ed8;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
 
 .continue-btn:active {
