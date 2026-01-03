@@ -7,25 +7,32 @@ class EmailService {
   }
 
   initializeTransporter() {
-    // Gmail configuration (you can change this to other providers)
-    this.transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS // Use App Password for Gmail
-      }
-    });
-
-    // Alternative configuration for other SMTP providers
-    // this.transporter = nodemailer.createTransport({
-    //   host: process.env.SMTP_HOST,
-    //   port: process.env.SMTP_PORT,
-    //   secure: process.env.SMTP_SECURE === 'true',
-    //   auth: {
-    //     user: process.env.SMTP_USER,
-    //     pass: process.env.SMTP_PASS
-    //   }
-    // });
+    // Check if we have explicit SMTP configuration
+    if (process.env.SMTP_HOST && process.env.SMTP_USER) {
+      console.log('📧 Using Custom SMTP Configuration:', process.env.SMTP_HOST);
+      this.transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT || 587,
+        secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS
+        },
+        tls: {
+          rejectUnauthorized: false // Helps with some self-signed certs or strict firewall issues
+        }
+      });
+    } else {
+      // Default Gmail configuration
+      console.log('📧 Using Default Gmail Configuration');
+      this.transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
+        }
+      });
+    }
   }
 
   async sendOTP(email, otp, name = 'User') {
