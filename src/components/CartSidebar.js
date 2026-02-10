@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
 import { ordersAPI } from '../services/api';
 import PaymentModal from './PaymentModal';
 import OrderSuccessModal from './OrderSuccessModal';
@@ -8,7 +7,6 @@ import './CartSidebar.css';
 
 function CartSidebar() {
   const { cart, updateQuantity, getTotal, isCartOpen, setIsCartOpen, clearCart } = useCart();
-  const { user } = useAuth();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [orderData, setOrderData] = useState(null);

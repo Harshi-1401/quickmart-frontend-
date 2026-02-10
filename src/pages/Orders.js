@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { ordersAPI } from '../services/api';
 import './Orders.css';
 
 function Orders() {
   const [orders, setOrders] = useState([]);
-  const { user } = useAuth();
 
   useEffect(() => {
     fetchOrders();

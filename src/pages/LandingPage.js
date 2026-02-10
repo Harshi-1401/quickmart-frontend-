@@ -22,7 +22,6 @@ import {
   AttachMoney,
   Speed,
   Inventory,
-  LocalOffer,
   Security,
   SupportAgent
 } from '@mui/icons-material';
