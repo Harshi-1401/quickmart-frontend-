@@ -39,7 +39,7 @@ function RegisterPage() {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://quickmart-backend-tvuf.onrender.com/api'}/auth/send-otp`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://quickmart-backend-1-zfua.onrender.com/api'}/auth/send-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ function RegisterPage() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://quickmart-backend-tvuf.onrender.com/api'}/auth/resend-otp`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://quickmart-backend-1-zfua.onrender.com/api'}/auth/resend-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -113,7 +113,7 @@ function RegisterPage() {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://quickmart-backend-tvuf.onrender.com/api'}/auth/verify-otp`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://quickmart-backend-1-zfua.onrender.com/api'}/auth/verify-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -160,7 +160,7 @@ function RegisterPage() {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://quickmart-backend-tvuf.onrender.com/api'}/auth/register`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://quickmart-backend-1-zfua.onrender.com/api'}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
