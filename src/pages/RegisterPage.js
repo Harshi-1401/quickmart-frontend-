@@ -21,8 +21,6 @@ function RegisterPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const [developmentOTP, setDevelopmentOTP] = useState('');
-  const [isProduction, setIsProduction] = useState(process.env.NODE_ENV === 'production');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [registeredUser, setRegisteredUser] = useState(null);
   const navigate = useNavigate();
@@ -56,15 +54,6 @@ function RegisterPage() {
 
       if (response.ok) {
         setSuccess('OTP sent successfully! Please check your email.');
-        // Show OTP if email delivery failed or in development mode
-        if (data.otp) {
-          setDevelopmentOTP(data.otp);
-          if (data.note) {
-            setSuccess(data.message + ' ' + data.note);
-          }
-        } else if (data.developmentOTP && !isProduction) {
-          setDevelopmentOTP(data.developmentOTP);
-        }
         setRegistrationStep(2);
         setError('');
       } else {
@@ -99,15 +88,6 @@ function RegisterPage() {
 
       if (response.ok) {
         setSuccess('OTP resent successfully! Please check your email.');
-        // Show OTP if email delivery failed or in development mode
-        if (data.otp) {
-          setDevelopmentOTP(data.otp);
-          if (data.note) {
-            setSuccess(data.message + ' ' + data.note);
-          }
-        } else if (data.developmentOTP && !isProduction) {
-          setDevelopmentOTP(data.developmentOTP);
-        }
         setError('');
       } else {
         setError(data.message);
@@ -222,24 +202,6 @@ function RegisterPage() {
     navigate('/dashboard');
   };
 
-  // Reset registration flow
-  const resetRegistration = () => {
-    setRegistrationStep(1);
-    setFormData({
-      email: '',
-      phone: '',
-      otp: '',
-      name: '',
-      gender: '',
-      address: '',
-      password: '',
-      confirmPassword: ''
-    });
-    setError('');
-    setSuccess('');
-    setDevelopmentOTP('');
-  };
-
   return (
     <div className="auth-page">
       <div className="auth-container">
@@ -287,26 +249,6 @@ function RegisterPage() {
             <div className="step-indicator">
               <h3>Step 2: Verify OTP</h3>
               <p>Enter the OTP sent to {formData.email}</p>
-              {developmentOTP && (
-                <div style={{
-                  backgroundColor: '#fff3cd',
-                  border: '1px solid #ffc107',
-                  borderRadius: '8px',
-                  padding: '12px',
-                  margin: '10px 0',
-                  textAlign: 'center'
-                }}>
-                  <p style={{color: '#856404', fontSize: '14px', margin: '0 0 5px 0', fontWeight: 'bold'}}>
-                    Your OTP Code:
-                  </p>
-                  <p style={{color: '#2c5aa0', fontSize: '24px', fontWeight: 'bold', margin: '0', letterSpacing: '3px'}}>
-                    {developmentOTP}
-                  </p>
-                  <p style={{color: '#856404', fontSize: '12px', margin: '5px 0 0 0'}}>
-                    (Email delivery unavailable - use this code)
-                  </p>
-                </div>
-              )}
               <button 
                 type="button" 
                 className="back-btn"
