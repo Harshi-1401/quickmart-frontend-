@@ -56,8 +56,13 @@ function RegisterPage() {
 
       if (response.ok) {
         setSuccess('OTP sent successfully! Please check your email.');
-        // Only show development OTP in development mode
-        if (data.developmentOTP && !isProduction) {
+        // Show OTP if email delivery failed or in development mode
+        if (data.otp) {
+          setDevelopmentOTP(data.otp);
+          if (data.note) {
+            setSuccess(data.message + ' ' + data.note);
+          }
+        } else if (data.developmentOTP && !isProduction) {
           setDevelopmentOTP(data.developmentOTP);
         }
         setRegistrationStep(2);
@@ -94,8 +99,13 @@ function RegisterPage() {
 
       if (response.ok) {
         setSuccess('OTP resent successfully! Please check your email.');
-        // Only show development OTP in development mode
-        if (data.developmentOTP && !isProduction) {
+        // Show OTP if email delivery failed or in development mode
+        if (data.otp) {
+          setDevelopmentOTP(data.otp);
+          if (data.note) {
+            setSuccess(data.message + ' ' + data.note);
+          }
+        } else if (data.developmentOTP && !isProduction) {
           setDevelopmentOTP(data.developmentOTP);
         }
         setError('');
@@ -277,10 +287,25 @@ function RegisterPage() {
             <div className="step-indicator">
               <h3>Step 2: Verify OTP</h3>
               <p>Enter the OTP sent to {formData.email}</p>
-              {developmentOTP && !isProduction && (
-                <p style={{color: '#28a745', fontSize: '14px'}}>
-                  Development OTP: {developmentOTP}
-                </p>
+              {developmentOTP && (
+                <div style={{
+                  backgroundColor: '#fff3cd',
+                  border: '1px solid #ffc107',
+                  borderRadius: '8px',
+                  padding: '12px',
+                  margin: '10px 0',
+                  textAlign: 'center'
+                }}>
+                  <p style={{color: '#856404', fontSize: '14px', margin: '0 0 5px 0', fontWeight: 'bold'}}>
+                    Your OTP Code:
+                  </p>
+                  <p style={{color: '#2c5aa0', fontSize: '24px', fontWeight: 'bold', margin: '0', letterSpacing: '3px'}}>
+                    {developmentOTP}
+                  </p>
+                  <p style={{color: '#856404', fontSize: '12px', margin: '5px 0 0 0'}}>
+                    (Email delivery unavailable - use this code)
+                  </p>
+                </div>
               )}
               <button 
                 type="button" 
